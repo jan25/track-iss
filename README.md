@@ -5,7 +5,7 @@
 Web page to track position of International Space Station. Position is auto updated and displayed in standard
 longitude and latitude coordinations, they are also converted to Google Plus code format. Additionally, a nearest city and country are displayed.
 
-Check current position of ISS here: **[jan25/track-iss](jan25.github.io/track-iss)**.
+Check current position of ISS here: **[jan25/track-iss](https://jan25.github.io/track-iss)**.
 
 I wrote this app being fascinated while watching live crew demo-2 launch in June'20.
 
