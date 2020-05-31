@@ -2,7 +2,10 @@ import OpenLocationCode from 'open-location-code-typescript';
 import worldCities from './scripts/worldcities.json';
 import {distance} from '@turf/turf';
 
-const openNotifyURL = 'http://api.open-notify.org/iss-now.json';
+// CORS proxy URL is necessary as open notify API isn't available in https
+// as github pages do not allow requests to non https URLs.
+const corsProxyURL = 'https://cors-anywhere.herokuapp.com/';
+const openNotifyURL = corsProxyURL + 'http://api.open-notify.org/iss-now.json';
 
 export enum Status {
     Available = "Available",
@@ -95,4 +98,3 @@ export let getNearestCity = (latLong: LatLong): City => {
         status: Status.Available
     };
 }
-
