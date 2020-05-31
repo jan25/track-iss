@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/jan25.github.io/track-iss/static/css/main.9d6ff9e9.chunk.css",
+    "main.js": "/jan25.github.io/track-iss/static/js/main.5b4a3c4e.chunk.js",
+    "main.js.map": "/jan25.github.io/track-iss/static/js/main.5b4a3c4e.chunk.js.map",
+    "runtime-main.js": "/jan25.github.io/track-iss/static/js/runtime-main.a2372af0.js",
+    "runtime-main.js.map": "/jan25.github.io/track-iss/static/js/runtime-main.a2372af0.js.map",
+    "static/js/2.7d0cadbe.chunk.js": "/jan25.github.io/track-iss/static/js/2.7d0cadbe.chunk.js",
+    "static/js/2.7d0cadbe.chunk.js.map": "/jan25.github.io/track-iss/static/js/2.7d0cadbe.chunk.js.map",
+    "index.html": "/jan25.github.io/track-iss/index.html",
+    "precache-manifest.3fa8930f7a57fbd8d994ecb519bc87d3.js": "/jan25.github.io/track-iss/precache-manifest.3fa8930f7a57fbd8d994ecb519bc87d3.js",
+    "service-worker.js": "/jan25.github.io/track-iss/service-worker.js",
+    "static/css/main.9d6ff9e9.chunk.css.map": "/jan25.github.io/track-iss/static/css/main.9d6ff9e9.chunk.css.map",
+    "static/js/2.7d0cadbe.chunk.js.LICENSE.txt": "/jan25.github.io/track-iss/static/js/2.7d0cadbe.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a2372af0.js",
+    "static/js/2.7d0cadbe.chunk.js",
+    "static/css/main.9d6ff9e9.chunk.css",
+    "static/js/main.5b4a3c4e.chunk.js"
+  ]
+}
