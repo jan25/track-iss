@@ -1,5 +1,5 @@
 import React from 'react';
-import { LatLong, latLongStr, PlusCode, Status, getLatLong, getPlusCode, defaultLatLong, defaultPlusCode } from './Api';
+import { LatLong, PlusCode,City,  Status, getLatLong, getPlusCode, defaultLatLong, defaultPlusCode, defaultCity, getNearestCity } from './Api';
 import './App.css';
 
 export interface AppProps {
@@ -9,6 +9,7 @@ export interface AppProps {
 export interface AppState {
   latLong: LatLong
   plusCode: PlusCode
+  city: City
 }
  
 class App extends React.Component<AppProps, AppState> {
@@ -17,7 +18,8 @@ class App extends React.Component<AppProps, AppState> {
     super(props)
     this.state = {
       latLong: defaultLatLong(),
-      plusCode: defaultPlusCode()
+      plusCode: defaultPlusCode(),
+      city: defaultCity()
     }
 
     this.pollApi = this.pollApi.bind(this);
@@ -34,10 +36,13 @@ class App extends React.Component<AppProps, AppState> {
       <div>
         <h1>ISS is currently over</h1>
         <p>
-          Lat long: { this.state.latLong.status === Status.Available ? latLongStr(this.state.latLong) : "Not available"}
+          Lat long: { this.state.latLong.status === Status.Available ? this.latLongStr(this.state.latLong) : "Not available"}
         </p>
         <p>
           Plus code: { this.state.plusCode.status === Status.Available ? this.state.plusCode.code : "Not available"}
+        </p>
+        <p>
+          Closest city: { this.state.city.status === Status.Available ? this.cityStr(this.state.city) : "Not available" }
         </p>
       </div>
     );
@@ -54,7 +59,20 @@ class App extends React.Component<AppProps, AppState> {
         latLong,
         plusCode: getPlusCode(latLong)
       })
-    })
+      this.setState({
+        city: getNearestCity(latLong)
+      })
+    });
+  }
+
+  latLongStr(latLong: LatLong): string {
+    let latStr: string = `${Math.abs(latLong.latitude)}${latLong.latitude > 0 ? '° N, ' : '° S, '}`;
+    let longStr: string = `${Math.abs(latLong.longitude)}${latLong.longitude > 0 ? '° E' : '° W'}`;
+    return `${latStr} ${longStr}`;
+  }
+
+  cityStr(city: City): string {
+    return `${city.city}, ${city.country}`;
   }
 }
  

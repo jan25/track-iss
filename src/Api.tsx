@@ -1,4 +1,6 @@
 import OpenLocationCode from 'open-location-code-typescript';
+import worldCities from './scripts/worldcities.json';
+import {distance} from '@turf/turf';
 
 const openNotifyURL = 'http://api.open-notify.org/iss-now.json';
 
@@ -18,6 +20,12 @@ export interface PlusCode {
     status: Status
 }
 
+export interface City {
+    city: string
+    country: string
+    status: Status
+}
+
 export let defaultLatLong = (): LatLong => {
     return {
         latitude: 0,
@@ -31,6 +39,14 @@ export let defaultPlusCode = (): PlusCode => {
         code: '',
         status: Status.NotAvailable
     }
+}
+
+export let defaultCity = (): City => {
+    return {
+        city: 'city',
+        country: 'country',
+        status: Status.NotAvailable
+    };
 }
 
 export let getLatLong = async (): Promise<LatLong> => {
@@ -52,15 +68,31 @@ export let getLatLong = async (): Promise<LatLong> => {
         });
 }
 
-export let latLongStr = (latLong: LatLong): string => {
-    let latStr: string = `${Math.abs(latLong.latitude)}` + `${latLong.latitude > 0 ? '° N, ' : '° S, '}`;
-    let longStr: string = `${Math.abs(latLong.longitude)}` + `${latLong.longitude > 0 ? '° E' : '° W'}`;
-    return `${latStr} ${longStr}`;
-}
-
 export let getPlusCode = (latLong: LatLong): PlusCode => {
     return {
         code: OpenLocationCode.encode(latLong.latitude, latLong.longitude),
         status: Status.Available
     };
 }
+
+export let getNearestCity = (latLong: LatLong): City => {
+    let near: any;
+    let minDist: number = 10000; // 'km'
+    for (let city of worldCities) {
+        let d: number = distance(
+            [parseFloat(city.lng), parseFloat(city.lat)],
+            [latLong.longitude, latLong.latitude],
+            { units: 'kilometers' }
+        );
+        if (d < minDist) {
+            minDist = d;
+            near = city;
+        }
+    }
+    return {
+        city: near.city,
+        country: near.country,
+        status: Status.Available
+    };
+}
+
