@@ -11,7 +11,8 @@ export interface AppProps {
 export interface AppState {
   latLong: LatLong
   plusCode: PlusCode
-  city: City
+  city: City,
+  corsError: boolean
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -21,11 +22,13 @@ class App extends React.Component<AppProps, AppState> {
     this.state = {
       latLong: defaultLatLong(),
       plusCode: defaultPlusCode(),
-      city: defaultCity()
+      city: defaultCity(),
+      corsError: false,
     }
 
     this.pollApi = this.pollApi.bind(this);
     this.queryApi = this.queryApi.bind(this);
+    this.corsErrorBlock = this.corsErrorBlock.bind(this);
   }
 
   componentDidMount() {
@@ -63,8 +66,25 @@ class App extends React.Component<AppProps, AppState> {
           <Typography variant="h4" gutterBottom style={{ textAlign: 'center' }}>
             {this.state.city.status === Status.Available ? this.cityStr(this.state.city) : "Not available"}
           </Typography>
+
+          {
+            this.state.corsError && this.corsErrorBlock()
+          }
         </Grid>
       </div>
+    );
+  }
+
+  corsErrorBlock() {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Typography variant="caption" display="block" gutterBottom>
+          This application calls tracking API via CORS proxy which needs to be enabled for your browser.
+        </Typography>
+        <Typography variant="caption" display="block" gutterBottom>
+          <a target="_blank" rel="noopener noreferrer" href="https://cors-anywhere.herokuapp.com/corsdemo">Enable it here</a> and refresh this page!
+        </Typography>
+      </div >
     );
   }
 
@@ -77,7 +97,8 @@ class App extends React.Component<AppProps, AppState> {
       .then((latLong) => {
         this.setState({
           latLong,
-          plusCode: getPlusCode(latLong)
+          plusCode: getPlusCode(latLong),
+          corsError: latLong.status === Status.NotAvailable
         })
         this.setState({
           city: getNearestCity(latLong)

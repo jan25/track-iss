@@ -1,6 +1,6 @@
 import OpenLocationCode from 'open-location-code-typescript';
 import worldCities from './scripts/worldcities.json';
-import {distance} from '@turf/turf';
+import { distance } from '@turf/turf';
 
 // CORS proxy URL is necessary as open notify API isn't available in https
 // as github pages do not allow requests to non https URLs.
@@ -59,14 +59,14 @@ export let getLatLong = async (): Promise<LatLong> => {
             return {
                 latitude: parseFloat(data.iss_position.latitude),
                 longitude: parseFloat(data.iss_position.longitude),
-                status: Status.Available
+                status: Status.Available,
             }
         })
         .catch((err) => {
             return {
                 latitude: 0,
                 longitude: 0,
-                status: Status.NotAvailable
+                status: Status.NotAvailable,
             }
         });
 }
